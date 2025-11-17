@@ -6,6 +6,11 @@
     <title>Portfolio - SERGE RISNER</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script>
+        emailjs.init("ZyjOfhr2fKEqu4nrf");
+    </script>
+
 </head>
 <body>
     <header>
@@ -161,9 +166,9 @@ Je peux leurs remercier pour leur confiance...
         </section>
 
         <!-- Contact -->
-        <section id="contact" class="section">
-            <h2>Contactez-moi</h2>
-            <p>Vous pouvez me joindre directement via ce formulaire :</p>
+<section id="contact" class="section">
+    <h2>Contactez-moi</h2>
+    <p>Vous pouvez me joindre directement via ce formulaire :</p>
 
  <form id="contact-form">
   <div class="form-group">
@@ -213,5 +218,33 @@ Je peux leurs remercier pour leur confiance...
     </footer>
 
     <script src="script.js"></script>
+    <script>
+        document.getElementById("contact-form").addEventListener("submit", function(e) {
+            e.preventDefault();
+        
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const message = document.getElementById("message").value;
+        
+            // Stockage local (optionnel)
+            localStorage.setItem("contact_name", name);
+            localStorage.setItem("contact_email", email);
+            localStorage.setItem("contact_message", message);
+        
+            // Envoi EmailJS
+            emailjs.send("service_zq2vhdo", "template_k7elb16", {
+                from_name: name,
+                reply_to: email,
+                message: message
+            })
+            .then(() => {
+                alert("Message envoyé avec succès !");
+                document.getElementById("contact-form").reset();
+            })
+            .catch((error) => {
+                alert("Erreur : " + JSON.stringify(error));
+            });
+        });
+        </script>        
 </body>
 </html>

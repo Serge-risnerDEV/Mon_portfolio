@@ -170,15 +170,15 @@ Je peux leurs remercier pour leur confiance...
     <h2>Contactez-moi</h2>
     <p>Vous pouvez me joindre directement via ce formulaire :</p>
 
- <form id="contact-form">
+<form id="contact-form">
   <div class="form-group">
-    <label for="name">Nom</label>
-    <input type="text" id="name" name="name" placeholder="Votre nom" required>
+    <label for="from_name">Nom</label>
+    <input type="text" id="from_name" name="from_name" placeholder="Votre nom" required>
   </div>
 
   <div class="form-group">
-    <label for="email">Email</label>
-    <input type="email" id="email" name="email" placeholder="Votre email" required>
+    <label for="reply_to">Email</label>
+    <input type="email" id="reply_to" name="reply_to" placeholder="Votre email" required>
   </div>
 
   <div class="form-group">
@@ -188,6 +188,7 @@ Je peux leurs remercier pour leur confiance...
 
   <button type="submit" class="btn">Envoyer</button>
 </form>
+
 
             <h1>Mes informations de contact</h1>
             <p></p>
@@ -217,34 +218,29 @@ Je peux leurs remercier pour leur confiance...
         <p>&copy; 2025 SERGE RISNER. Tous droits réservés.</p>
     </footer>
 
-    <script src="script.js"></script>
-    <script>
-        document.getElementById("contact-form").addEventListener("submit", function(e) {
-            e.preventDefault();
-        
-            const name = document.getElementById("name").value;
-            const email = document.getElementById("email").value;
-            const message = document.getElementById("message").value;
-        
-            // Stockage local (optionnel)
-            localStorage.setItem("contact_name", name);
-            localStorage.setItem("contact_email", email);
-            localStorage.setItem("contact_message", message);
-        
-            // Envoi EmailJS
-            emailjs.send("service_zq2vhdo", "template_k7elb16", {
-                from_name: name,
-                reply_to: email,
-                message: message,
-            })
-            .then(() => {
-                alert("Message envoyé avec succès !");
-                document.getElementById("contact-form").reset();
-            })
-            .catch((error) => {
-                alert("Erreur : " + JSON.stringify(error));
-            });
-        });
-        </script>        
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+  emailjs.init("ZyjOfhr2fKEqu4nrf"); // Ton User ID EmailJS
+
+  document.getElementById("contact-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const params = {
+          from_name: document.getElementById("from_name").value,
+          reply_to: document.getElementById("reply_to").value,
+          message: document.getElementById("message").value,
+      };
+
+      emailjs.send("service_zq2vhdo", "template_k7elb16", params)
+      .then(() => {
+          alert("Message envoyé avec succès !");
+          document.getElementById("contact-form").reset();
+      })
+      .catch((error) => {
+          alert("Erreur : " + JSON.stringify(error));
+      });
+  });
+</script>
+
 </body>
 </html>
